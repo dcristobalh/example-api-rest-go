@@ -40,7 +40,7 @@ func main() {
 	router.HandleFunc("/clothes/{clothesid}", DeleteClothes).Methods("DELETE")
 
 	// Delete all clothes
-	router.HandleFunc("/clothes/", DeleteClothes).Methods("DELETE")
+	router.HandleFunc("/clothes/", DeleteAllClothes).Methods("DELETE")
 
 	// serve the app
 	fmt.Println("Server at 8080")
@@ -50,9 +50,9 @@ func main() {
 func GetClothes(w http.ResponseWriter, r *http.Request) {
 	db := src.SetupDB()
 
-	src.PrintMessage("Getting movies...")
+	src.PrintMessage("Getting clothes...")
 
-	// Get all movies from movies table that don't have movieID = "1"
+	// Get all clothes from clothes table that don't have clothesID = "1"
 	rows, err := db.Query("SELECT * FROM clothes")
 
 	// check errors
@@ -61,7 +61,7 @@ func GetClothes(w http.ResponseWriter, r *http.Request) {
 	// var response []JsonResponse
 	var clothes []Clothes
 
-	// Foreach movie
+	// Foreach clothes
 	for rows.Next() {
 		var id int
 		var clothesID string
@@ -101,7 +101,7 @@ func CreateClothes(w http.ResponseWriter, r *http.Request) {
 		// check errors
 		src.CheckErr(err)
 
-		response = JsonResponse{Type: "success", Message: "The movie has been inserted successfully!"}
+		response = JsonResponse{Type: "success", Message: "The clothes has been inserted successfully!"}
 	}
 
 	json.NewEncoder(w).Encode(response)
