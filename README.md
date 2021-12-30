@@ -5,7 +5,7 @@
 ![architecture](images/diagram-api-go.jpg)
 ## Requirements
 
-* Install golang, in my case i do in ubuntu. Check official installation instructions [golang](https://go.dev/doc/install)
+* Install golang, in my case I have done in ubuntu. Check official installation instructions [golang](https://go.dev/doc/install)
 
 * Install or point to posgres/mysql database, in this case i will use posgresql. For example in docker, user and database name are posgres
 
