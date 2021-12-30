@@ -1,17 +1,11 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
+	"log"
+	"net/http"
 
-	"github.com/dcristobalh/api-rest-go/src"
-)
-
-// Set variables to connection database
-const (
-	DB_USER     = "postgres"
-	DB_PASSWORD = "mysecretpassword"
-	DB_NAME     = "posgres"
+	"github.com/gorilla/mux"
 )
 
 // Create structs to define and get data from database
@@ -26,12 +20,27 @@ type JsonResponse struct {
 	Message string    `json:"message"`
 }
 
-// Connect to the database
-func setupDB() *sql.DB {
-	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", DB_USER, DB_PASSWORD, DB_NAME)
-	db, err := sql.Open("postgres", dbinfo)
+// Define main function where we will start our server and handle routes
+func main() {
 
-	src.CheckErr(err)
+	// Init the mux router
+	router := mux.NewRouter()
 
-	return DB
+	// Route handles & endpoints
+
+	// Get all movies
+	router.HandleFunc("/clothes/", GetClothes).Methods("GET")
+
+	// Create a movie
+	router.HandleFunc("/clothes/", CreateClothes).Methods("POST")
+
+	// Delete a specific movie by the movieID
+	router.HandleFunc("/clothes/{clothesid}", DeleteClothes).Methods("DELETE")
+
+	// Delete all movies
+	router.HandleFunc("/clothes/", DeleteClothes).Methods("DELETE")
+
+	// serve the app
+	fmt.Println("Server at 8080")
+	log.Fatal(http.ListenAndServe(":8000", router))
 }
