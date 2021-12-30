@@ -1,5 +1,8 @@
 # Test an api REST in Golang
 
+## Architecture diagram
+
+![architecture](images/diagram-api-go.jpg)
 ## Requirements
 
 * Install golang, in my case i do in ubuntu. Check official installation instructions [golang](https://go.dev/doc/install)
@@ -17,7 +20,7 @@ docker exec -it postgres-test psql postgres postgresdocker exec -it postgres-tes
 ```postgresql
 CREATE TABLE clothes (
     id SERIAL,
-    clothesID integer NOT NULL,
+    clothesID varchar(30) NOT NULL,
     clothesName varchar(30) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -59,3 +62,25 @@ select * from clothes;
 (5 rows)
 ```
 --------
+
+## Run 
+Clone repository
+
+```bash
+git clone https://github.com/dcristobalh/api-rest-go.git
+```
+Enter the directory
+```bash
+cd api-rest-go
+```
+Run the program
+```golang
+go run .
+```
+## Test
+
+Do it with curl or postman, for example
+
+```bash
+curl -X GET http://localhost:8000/clothes/
+```

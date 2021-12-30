@@ -43,7 +43,7 @@ func main() {
 	router.HandleFunc("/clothes/", DeleteAllClothes).Methods("DELETE")
 
 	// serve the app
-	fmt.Println("Server at 8000")
+	fmt.Println("Server is up & running at port 8000")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
