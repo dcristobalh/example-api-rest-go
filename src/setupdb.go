@@ -3,15 +3,17 @@ package src
 import (
 	"database/sql"
 	"fmt"
+
+	_ "github.com/lib/pq"
 )
 
 // Set variables to connection database
 const (
 	DB_HOST     = "localhost"
-	DB_PORT     = "5432"
+	DB_PORT     = 5432
 	DB_USER     = "postgres"
 	DB_PASSWORD = "mysecretpassword"
-	DB_NAME     = "posgres"
+	DB_NAME     = "postgres"
 )
 
 // Connect to the database
@@ -21,5 +23,5 @@ func SetupDB() *sql.DB {
 
 	CheckErr(err)
 
-	return DB
+	return db
 }

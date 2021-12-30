@@ -43,7 +43,7 @@ func main() {
 	router.HandleFunc("/clothes/", DeleteAllClothes).Methods("DELETE")
 
 	// serve the app
-	fmt.Println("Server at 8080")
+	fmt.Println("Server at 8000")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
@@ -103,6 +103,54 @@ func CreateClothes(w http.ResponseWriter, r *http.Request) {
 
 		response = JsonResponse{Type: "success", Message: "The clothes has been inserted successfully!"}
 	}
+
+	json.NewEncoder(w).Encode(response)
+}
+
+// Delete a clothes
+
+// response and request handlers
+func DeleteClothes(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	clothesID := params["clothesid"]
+
+	var response = JsonResponse{}
+
+	if clothesID == "" {
+		response = JsonResponse{Type: "error", Message: "You are missing clothesID parameter."}
+	} else {
+		db := src.SetupDB()
+
+		src.PrintMessage("Deleting clothes from DB")
+
+		_, err := db.Exec("DELETE FROM clothes where clothesID = $1", clothesID)
+
+		// check errors
+		src.CheckErr(err)
+
+		response = JsonResponse{Type: "success", Message: "The clothes has been deleted successfully!"}
+	}
+
+	json.NewEncoder(w).Encode(response)
+}
+
+// Delete all clothes
+
+// response and request handlers
+func DeleteAllClothes(w http.ResponseWriter, r *http.Request) {
+	db := src.SetupDB()
+
+	src.PrintMessage("Deleting all clothes...")
+
+	_, err := db.Exec("DELETE FROM clothes")
+
+	// check errors
+	src.CheckErr(err)
+
+	src.PrintMessage("All clothes have been deleted successfully!")
+
+	var response = JsonResponse{Type: "success", Message: "All clothes have been deleted successfully!"}
 
 	json.NewEncoder(w).Encode(response)
 }
