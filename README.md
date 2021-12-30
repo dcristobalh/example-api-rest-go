@@ -15,7 +15,7 @@ docker run --name postgres-test -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpasswo
 
 * Create a sample table for our application, for example
 ```bash
-docker exec -it postgres-test psql postgres postgresdocker exec -it postgres-test psql postgres postgres
+docker exec -it postgres-test psql postgres postgres
 ```
 ```postgresql
 CREATE TABLE clothes (
